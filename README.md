@@ -1,4 +1,4 @@
-# UBC-ELEC413-2023
+# UBC-ELEC413-2024
 
 The course project is to design a photonic integrated circuit that connects to an on-chip semiconductor laser.
 
@@ -28,12 +28,12 @@ This repository contains the merging framework and template example circuits.  H
   * Install the forked project repository
     * menu Tools > Macro Development
 	    * click on Python
-		  * in the window below, right-click and choose Add Location, then find the UBC-ELEC413-2023 folder
+		  * in the window below, right-click and choose Add Location, then find the UBC-ELEC413-2024 folder
 		  * open the file UBC_ELEC413_TLDS_resonators
   		* Run it using the Play! button. You should see a layout with a laser and several individual designs
 
 * Create your own design
-  * in the Tools > Macro Development, find the folder UBC-ELEC413-2023/Layout/Designs
+  * in the Tools > Macro Development, find the folder UBC-ELEC413-2024/Layout/Designs
   * right-click on the folder, New, then Plain Python file (*.py)
   * type in the filename for your own design file, e.g., design_lukasc
   * open the file design_student1, select all, and copy the code
@@ -48,7 +48,7 @@ This repository contains the merging framework and template example circuits.  H
 
 * Upload your design to GitHub
   * First upload it to your own Fork
-    * in GitHub Desktop, choose the UBC-EELC413-2023 repository
+    * in GitHub Desktop, choose the UBC-EELC413-2024 repository
     * In the "Changes" tab:
       * Change the selection of files: remove the merged layout files: Layout/UBC_ELEC413_TLDS_resonators*
       * bottom left, enter a summary (e.g., your name), 
@@ -61,7 +61,7 @@ This repository contains the merging framework and template example circuits.  H
   
   * Keep your local copy in sync with the online version:
      * Fetch - GitHub Desktop:
-     * Current Repository = UBC-ELEC413-2023
+     * Current Repository = UBC-ELEC413-2024
      * top right: Fetch Origin
 
 
