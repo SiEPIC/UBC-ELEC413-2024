@@ -129,12 +129,12 @@ if not cell_gcA:
     raise Exception ('Cannot load grating coupler cell; please check the script carefully.')
 if not cell_gcB:
     raise Exception ('Cannot load grating coupler cell; please check the script carefully.')
-if not cell_terminator:
-    raise Exception ('Cannot load terminator cell; please check the script carefully.')
+#if not cell_terminator:
+#    raise Exception ('Cannot load terminator cell; please check the script carefully.')
 if not cell_laser:
     raise Exception ('Cannot load laser cell; please check the script carefully.')
-if not cell_pad:
-    raise Exception ('Cannot load bond pad cell; please check the script carefully.')
+#if not cell_pad:
+#    raise Exception ('Cannot load bond pad cell; please check the script carefully.')
 if not cell_waveguide:
     raise Exception ('Cannot load Waveguide Straight cell; please check the script carefully.')
 
@@ -363,7 +363,7 @@ for m in designs_:
     if not cell_wg1:
         raise Exception ('Cannot load Waveguide cell; please check the script carefully.')
     inst_wg1 = cell_design.insert(CellInstArray(cell_wg1.cell_index(), 
-        Trans(Trans.R0, wg_l/2, 50e3 )))
+        Trans(Trans.R0, wg_l/2, 10e3 )))
     wg_l = 1000
     cell_wg2 = ly.create_cell('Waveguide_Straight', ly.technology().name, {
         'wg_length':wg_l, 'wg_width': 350, 'pin2_name': 'opt_output1' })
