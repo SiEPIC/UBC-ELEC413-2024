@@ -3,24 +3,24 @@
 #    see https://github.com/mustafacc/SiEPIC_Photonics_Package/ for documentation
 #
 #    Author: Mustafa Hammood   ; mustafa@siepic.com   ; mustafa@ece.ubc.ca
-#    SiEPIC Kits Ltd. 2020     ; University of British Columbia
+#    SiEPIC Kits Ltd. 2023     ; University of British Columbia
 #
-#    (c)2020
+#    (c)2023
 
 #############################
 # Simulate device           #
 #############################
 
-f1 = 140e12;
-f2 = 240e12;
+f1 = 160e12;  # min/max optical frequency for simulation
+f2 = 250e12;
 x_source = period/4;
 
 apod_center = 0.5; # you can ignore this :))
 apod_width = 0.125; # you can ignore this :))
 kx = 0.5; # you can ignore this :))
 
-sim_y_span = W*3 + dW*5;
-sim_z_span = thickness_device*6;
+sim_y_span = W*4 + dW*5;
+sim_z_span = thickness_device*10;
 
 # add fine mesh region
 addmesh;
@@ -145,16 +145,17 @@ adduserprop('w', 2, dW);
 myscript ="spectrum = getresult('bandstructure','spectrum'); \n";
 myscript = myscript + "fs = spectrum.fs; \n";
 myscript = myscript + "lambda = spectrum.lambda; \n";
+myscript = myscript + "bandwidth = matrix(length(w)); \n";
+myscript = myscript + "center_wavelength = matrix(length(w)); \n";
 myscript = myscript + "temp = fs(1:length(lambda)); \n";
 myscript = myscript + "ind = findpeaks(temp,2); \n";
 myscript = myscript + "bandwidth = abs(lambda(ind(2))-lambda(ind(1))); \n";
 myscript = myscript + "center_wavelength = lambda(ind(1)) + bandwidth/2; \n";
-myscript = myscript + "ng = " + num2str(ng) + "; \n"; 
+myscript = myscript + "ng = 4.3874; \n"; # don't worry it (and kappa) are not used :)
 myscript = myscript + "kappa = pi*ng*bandwidth/(center_wavelength^2); \n";
 set("analysis script", myscript); 
 addanalysisresult("kappa");
 addanalysisresult("bandwidth");
-addanalysisresult("center_wavelength");
 
 
 run;

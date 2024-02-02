@@ -49,7 +49,7 @@ W = 500e-9; # average waveguide width
 dW = 50e-9; # waveguide corrugation
 period = 320e-9; # corrugations period
 
-sinusoidal = false; # enable or disable sinusoidal, versus rectangular grating
+sinusoidal = true; # enable or disable sinusoidal, versus rectangular grating
 rib = false; # enable or disable rib layered waveguide type (do not enable with TM mode)
 sidewall_angle = 81;
 
@@ -74,8 +74,8 @@ plot(spectrum.lambda*1e9, spectrum.fs, "Wavelength (nm)", "fs");
 
 # Extract bandwidth and Bragg wavelength
 pos=findpeaks(spectrum.fs,2);
-#?"1st largest peak is at wavelength = " + num2str(spectrum.lambda(pos(1)));
-#?"2nd largest peak is at wavelength = " + num2str(spectrum.lambda(pos(2)));
+?"1st largest peak is at wavelength = " + num2str(spectrum.lambda(pos(1)));
+?"2nd largest peak is at wavelength = " + num2str(spectrum.lambda(pos(2)));
 ?"Bragg wavelength = " + num2str(abs(spectrum.lambda(pos(2))+spectrum.lambda(pos(1)))*1e9/2) + " nm";
 ?"Delta lambda = " + num2str(abs(spectrum.lambda(pos(2))-spectrum.lambda(pos(1)))*1e9) + " nm";
 
