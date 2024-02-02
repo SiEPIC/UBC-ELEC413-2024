@@ -1,0 +1,81 @@
+#
+#    Bragg grating Lumerical simulation flow
+#    see https://github.com/mustafacc/SiEPIC_Photonics_Package/ for documentation
+#
+#    Author: Mustafa Hammood   ; mustafa@siepic.com   ; mustafa@ece.ubc.ca
+#    SiEPIC Kits Ltd. 2023     ; University of British Columbia
+#
+#    (c)2023
+# with modifications by LukasC, 2024-02
+
+
+# Set the current working directory to the location of this script
+cd(filedirectory(currentscriptname));
+
+newproject;
+save("Bragg_Bandstructure.fsp");
+clear;
+
+#############################
+# Simulation parameters     #
+#############################
+
+wl_min = 1.5e-6; # simulation wavelength start
+wl_max = 1.6e-6; # simulation wavelength stop
+
+pol = 'TE'; # simulation polarization 
+
+# Simulation time determines the frequency resolution
+# If the time is too short, you will not be able to resolve the two peaks
+#  and find the bandwidth
+sim_time = 1500e-15; # E-15 is femto...
+# Mesh accuracy from 1 to 8 determines the accuracy
+# 1 is fast but inaccurate
+# 2 is probably good enough
+# 4 is very accurate
+mesh = 2;
+
+# higher resolution mesh in the waveguide region
+mesh_y = 5e-9;
+mesh_x = 5e-9;
+mesh_z = 20e-9;
+
+
+#############################
+# Device geometry           #
+#############################
+
+W = 500e-9; # average waveguide width
+dW = 50e-9; # waveguide corrugation
+period = 320e-9; # corrugations period
+
+sinusoidal = false; # enable or disable sinusoidal, versus rectangular grating
+rib = false; # enable or disable rib layered waveguide type (do not enable with TM mode)
+sidewall_angle = 81;
+
+thickness_device = 220e-9; # waveguide full thickness
+thickness_rib = 90e-9; # waveguide rib layer thickness
+thickness_superstrate = 2e-6; # superstrate thikness
+thickness_substrate = 2e-6; # substrate thickness
+thickness_handle = 1e-6; # handle substrate thickness
+
+mat_device = 'Si (Silicon) - Dispersive & Lossless'; # device material
+mat_superstrate = 'SiO2 (Glass) - Palik'; # superstrate material
+mat_substrate = 'SiO2 (Glass) - Palik'; # substrate material
+mat_handle = 'Si (Silicon) - Dispersive & Lossless'; # handle substrate material
+
+
+Bragg_draw;
+Bragg_simulate;
+
+# Plot results
+spectrum = getresult('bandstructure', 'spectrum');
+plot(spectrum.lambda*1e9, spectrum.fs, "Wavelength (nm)", "fs");
+
+# Extract bandwidth and Bragg wavelength
+pos=findpeaks(spectrum.fs,2);
+#?"1st largest peak is at wavelength = " + num2str(spectrum.lambda(pos(1)));
+#?"2nd largest peak is at wavelength = " + num2str(spectrum.lambda(pos(2)));
+?"Bragg wavelength = " + num2str(abs(spectrum.lambda(pos(2))+spectrum.lambda(pos(1)))*1e9/2) + " nm";
+?"Delta lambda = " + num2str(abs(spectrum.lambda(pos(2))-spectrum.lambda(pos(1)))*1e9) + " nm";
+
