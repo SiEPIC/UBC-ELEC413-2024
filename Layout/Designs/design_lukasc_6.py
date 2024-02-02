@@ -199,7 +199,7 @@ def design_lukasc_6(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         
     if not cell_taper:
         raise Exception ('Cannot load taper cell; please check the script carefully.')
-    waveguide_type_mm = 'Multimode Strip TE 1310 nm, w=2000 nm'
+    waveguide_type_mm = 'Si routing TE 1310 nm (compound waveguide)'
 
     # instantiate y-branch (attached to input waveguide)
     inst_y1 = connect_cell(inst_wg1, 'opt2', cell_y, 'opt2')
@@ -209,56 +209,21 @@ def design_lukasc_6(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     # instantiate Bragg grating (attached to y branch)
     inst_bragg1 = connect_cell(inst_y1, 'opt1', cell_bragg, 'opt1')
 
-    # instantiate a taper (attached to the first Bragg grating)
-    inst_taper1 = connect_cell(inst_bragg1, 'opt2', cell_taper, 'opt')
+    # instantiate Bragg grating
+    n_trips = 4
+    inst_bragg2 = connect_cell(inst_y1, 'opt1', cell_bragg, 'opt2')
+    inst_bragg2.transform(Trans(300000,n_trips*20000*2))
 
-    # instantiate a taper (attached to the first taper, then move)
-    inst_taper2 = connect_cell(inst_taper1, 'opt2', cell_taper, 'opt2')
-    # move the taper to the right
-    inst_taper2.transform(Trans(230000,0))
-
-    # Waveguide between taper 1 and taper 2 (wide multimode waveguide)
-    connect_pins_with_waveguide(inst_taper1, 'opt2', inst_taper2, 'opt2', waveguide_type=waveguide_type_mm)
-
-    # instantiate a taper (attached to the first taper, then move)
-    inst_taper3 = connect_cell(inst_taper1, 'opt2', cell_taper, 'opt2')
-    # move the taper to the right and up
-    inst_taper3.transform(Trans(230000,20000))
-
-    # Waveguide between taper 2 and taper 3 (single mode waveguide)
-    connect_pins_with_waveguide(inst_taper2, 'opt', inst_taper3, 'opt', waveguide_type=waveguide_type)
-
-    # instantiate a taper (attached to the third taper, then move)
-    inst_taper4 = connect_cell(inst_taper3, 'opt2', cell_taper, 'opt2')
-    # move the taper to the right and up
-    inst_taper4.transform(Trans(-250000,0))
-
-    # Waveguide between taper 3 and taper 4 (wide multimode waveguide)
-    connect_pins_with_waveguide(inst_taper3, 'opt2', inst_taper4, 'opt2', waveguide_type=waveguide_type_mm)
-
-    # instantiate a taper (attached to the third taper, then move)
-    inst_taper5 = connect_cell(inst_taper3, 'opt2', cell_taper, 'opt2')
-    # move the taper to the right and up
-    inst_taper5.transform(Trans(-250000,20000))
-
-    # Waveguide between taper 4 and taper 5 (single mode waveguide)
-    connect_pins_with_waveguide(inst_taper4, 'opt', inst_taper5, 'opt', waveguide_type=waveguide_type)
-
-    # instantiate a taper (attached to the fifth taper, then move)
-    inst_taper6 = connect_cell(inst_taper5, 'opt2', cell_taper, 'opt2')
-    # move the taper to the right and up
-    inst_taper6.transform(Trans(200000,0))
-
-    # Waveguide between taper 5 and taper 6 (wide multimode waveguide)
-    connect_pins_with_waveguide(inst_taper5, 'opt2', inst_taper6, 'opt2', waveguide_type=waveguide_type_mm)
-
-    # instantiate Bragg grating (attached to the last taper)
-    inst_bragg2 = connect_cell(inst_taper6, 'opt', cell_bragg, 'opt2')
+    # Waveguide
+    connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
+        waveguide_type=waveguide_type_mm,
+        turtle_A = [300,90,20,90,300,-90,20,-90]*n_trips )
 
     # End of Fabry-Perot cavity    
 
     # Waveguides for the two Fabry-Perot outputs:
     connect_pins_with_waveguide(inst_y1, 'opt3', inst_wg3, 'opt1', waveguide_type=waveguide_type)
-    connect_pins_with_waveguide(inst_bragg2, 'opt1', inst_wg2, 'opt1', waveguide_type=waveguide_type, turtle_A = [10, 90, 20, -90, 20, -90], error_min_bend_radius=False)
+#    connect_pins_with_waveguide(inst_bragg2, 'opt1', inst_wg2, 'opt1', waveguide_type=waveguide_type, turtle_A = [10, 90, 20, -90, 20, -90], error_min_bend_radius=False)
+    connect_pins_with_waveguide(inst_bragg2, 'opt1', inst_wg2, 'opt1', waveguide_type=waveguide_type, error_min_bend_radius=False)
 
     return inst_wg1, inst_wg2, inst_wg3
