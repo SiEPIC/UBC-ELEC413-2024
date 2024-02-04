@@ -73,7 +73,7 @@ lv.select_cell(cell.cell_index(), 0)
 dbu = ly.dbu
 TECHNOLOGY, lv, ly, cell = get_layout_variables()
 
-if TECHNOLOGY['technology_name'] not in tech:
+if TECHNOLOGY['technology_name'] not in tech or not tech in pya.Technology.technology_names():
     raise Exception ('This example needs to be executed in a layout with Technology = %s' % tech)
 else:
     waveguide_type = waveguide_type[tech]
