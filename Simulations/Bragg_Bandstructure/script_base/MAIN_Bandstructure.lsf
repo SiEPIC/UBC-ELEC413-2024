@@ -33,7 +33,7 @@ sim_time = 1500e-15; # E-15 is femto...
 # 1 is fast but inaccurate
 # 2 is probably good enough
 # 4 is very accurate
-mesh = 2;
+mesh = 4;
 
 # higher resolution mesh in the waveguide region
 mesh_y = 5e-9;
@@ -45,13 +45,13 @@ mesh_z = 20e-9;
 # Device geometry           #
 #############################
 
-W = 500e-9; # average waveguide width
-dW = 50e-9; # waveguide corrugation
-period = 320e-9; # corrugations period
+W = 350e-9; # average waveguide width
+dW = 26e-9; # waveguide corrugation
+period = 270e-9; # corrugations period
 
-sinusoidal = true; # enable or disable sinusoidal, versus rectangular grating
+sinusoidal = false; # enable or disable sinusoidal, versus rectangular grating
 rib = false; # enable or disable rib layered waveguide type (do not enable with TM mode)
-sidewall_angle = 81;
+sidewall_angle = 90;
 
 thickness_device = 220e-9; # waveguide full thickness
 thickness_rib = 90e-9; # waveguide rib layer thickness
@@ -78,4 +78,3 @@ pos=findpeaks(spectrum.fs,2);
 ?"2nd largest peak is at wavelength = " + num2str(spectrum.lambda(pos(2)));
 ?"Bragg wavelength = " + num2str(abs(spectrum.lambda(pos(2))+spectrum.lambda(pos(1)))*1e9/2) + " nm";
 ?"Delta lambda = " + num2str(abs(spectrum.lambda(pos(2))-spectrum.lambda(pos(1)))*1e9) + " nm";
-
