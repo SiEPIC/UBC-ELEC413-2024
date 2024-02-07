@@ -41,27 +41,32 @@ def design_ethanj(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
-    #cell_taper = ly.create_cell('ebeam_pcell_taper', library, {
-    #    'wg_width1': 0.350,
-    #    'wg_width2': 0.385,
-    #        })
-    #if not cell_taper:
-    #    raise Exception ('Cannot load taper cell; please check the script carefully.')
+    cell_taper = ly.create_cell('ebeam_pcell_taper', library, {
+        'wg_width1': 0.350,
+        'wg_width2': 0.385,
+            })
+    if not cell_taper:
+        raise Exception ('Cannot load taper cell; please check the script carefully.')
 
     # instantiate y-branch (attached to input waveguide)
     inst_y1 = connect_cell(inst_wg1, 'opt2', cell_y, 'opt2')
 
-    # instantiate taper from 350 nm waveguide y-branch to 350 nm Bragg grating
     #inst_taper1 = connect_cell(inst_y1, 'opt1', cell_taper, 'pin1')
     
     # instantiate Bragg grating (attached to y branch)
     inst_bragg1 = connect_cell(inst_y1, 'opt1', cell_bragg, 'opt1')
+    
+    # instantiate taper from bragg1 to cavity
+    inst_taper1 = connect_cell(inst_bragg1, 'opt2', cell_taper, 'pin1')
 
-    # instantiate Bragg grating (attached to the first Bragg grating)
-    inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
+    # instantiate taper from cavity to bragg2
+    inst_taper2 = connect_cell(inst_taper1, 'pin2', cell_taper, 'pin2')
     
     # move the Bragg grating to the right, and up
-    inst_bragg2.transform(Trans(320000,80000))
+    inst_taper2.transform(Trans(320000,80000))
+    
+    # instantiate Bragg grating (attached to the first Bragg grating)
+    inst_bragg2 = connect_cell(inst_taper2, 'pin1', cell_bragg, 'opt2')
 
     #####
     # Waveguides for the two outputs:
@@ -83,11 +88,11 @@ def design_ethanj(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     https://github.com/SiEPIC/SiEPIC-Tools/wiki/Scripted-Layout#adding-a-waveguide-between-components
     '''
     try:
-        connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
+        connect_pins_with_waveguide(inst_taper1, 'pin2', inst_taper2, 'pin2', 
             waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
             turtle_A = [330,90,18,90,350,-90,18,-90,350,90,18,90,350,-90,18,-90,310,90,18,90,310,-90,18,-90,310,90,18,90,310,-90,18,-90,310,90,18,90,310,-90,18,-90,310,90] )
     except:    
-        connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
+        connect_pins_with_waveguide(inst_taper1, 'pin2', inst_taper2, 'pin2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
             turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
 
