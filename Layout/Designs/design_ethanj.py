@@ -77,7 +77,6 @@ def design_ethanj(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     x_length = 210000
 
     for i in range(n_turns):
-      print(i)
       inst_taper3 = connect_cell(inst_taper1, 'opt2', cell_taper, 'opt2')
       inst_taper3.transform(Trans(x_length,y_length))
 
@@ -98,6 +97,7 @@ def design_ethanj(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     
       connect_pins_with_waveguide(inst_taper5, 'opt2', inst_taper6, 'opt2', waveguide_type=waveguide_type_mm)
       
+      # Update handles for tapers 1 & 2, so that we can continue in a "periodic" pattern
       inst_taper1 = inst_taper5
       inst_taper2 = inst_taper6
 
