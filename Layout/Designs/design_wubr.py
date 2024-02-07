@@ -60,6 +60,7 @@ def design_wubr(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     # instantiate Bragg grating (attached to the first Bragg grating)
     inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
     
+   
     # move the Bragg grating to the right, and up
     inst_bragg2.transform(Trans(250000,80000))
 
