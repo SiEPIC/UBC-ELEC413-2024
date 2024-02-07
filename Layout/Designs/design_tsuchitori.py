@@ -62,7 +62,7 @@ def design_tsuchitori(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type
     
     # move the Bragg grating to the right, and up
     n_trips = 4
-    inst_bragg2.transform(Trans(250000,n_trips*44000))
+    inst_bragg2.transform(Trans(240000,n_trips*44000))
 
     #####
     # Waveguides for the two outputs:
