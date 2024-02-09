@@ -1,7 +1,7 @@
 from pya import *
 
  
-def design_student1(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
+def design_glojui00(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     
     # load functions
     from SiEPIC.scripts import connect_pins_with_waveguide, connect_cell
@@ -61,7 +61,7 @@ def design_student1(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
     
     # move the Bragg grating to the right, and up
-    inst_bragg2.transform(Trans(250000,80000))
+    inst_bragg2.transform(Trans(250000,160000))
 
     #####
     # Waveguides for the two outputs:
@@ -85,11 +85,11 @@ def design_student1(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     try:
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
-            turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
+            turtle_A = [250,90,40,90,250,-90,40,-90,250,90,40,90,250,-90,40,-90] )
     except:    
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
-            turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
+            turtle_A = [250,90,40,90,250,-90,40,-90,250,90,40,90,250,-90,40,-90] )
 
     return inst_wg1, inst_wg2, inst_wg3
 
