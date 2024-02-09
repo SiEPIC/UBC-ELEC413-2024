@@ -37,7 +37,7 @@ def design_tianx(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         'grating_period': 0.269,
         'corrugation_width': 0.030,
         'wg_width': 0.350,
-        'sinusoidal': True})
+        'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
@@ -61,7 +61,7 @@ def design_tianx(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
     
     # move the Bragg grating to the right, and up
-    inst_bragg2.transform(Trans(250000,80000))
+    inst_bragg2.transform(Trans(280000,80000))
 
     #####
     # Waveguides for the two outputs:
@@ -85,7 +85,7 @@ def design_tianx(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     try:
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
-            turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
+            turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90, 250, 90, 20, 90, 250, -90, 20, -90, 270, -90 ] )
     except:    
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
