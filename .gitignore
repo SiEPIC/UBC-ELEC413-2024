@@ -68,3 +68,4 @@ target/
 */.DS_Store
 chip1/.DS_Store
 Layout/UBC_ELEC413_TLDS_Bragg_resonators.oas
+Layout/Designs/design_mohanad.py
