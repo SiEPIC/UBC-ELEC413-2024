@@ -36,7 +36,7 @@ def design_Peterv(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         'number_of_periods':20,
         'grating_period': 0.287,
         'corrugation_width': 0.05,
-        'wg_width': 0.365,
+        'wg_width': 0.35,
         'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
