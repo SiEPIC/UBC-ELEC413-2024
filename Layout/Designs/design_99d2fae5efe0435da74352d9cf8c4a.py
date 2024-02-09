@@ -33,11 +33,11 @@ def design_99d2fae5efe0435da74352d9cf8c4a(cell, cell_y, inst_wg1, inst_wg2, inst
     # load the cells from the PDK
     # choose appropriate parameters
     cell_bragg = ly.create_cell('ebeam_pcell_bragg_grating', library, {
-        'number_of_periods':60,
-        'grating_period': 0.270,
-        'corrugation_width': 0.08,
-        'wg_width': 0.385,
-        'sinusoidal': True})
+        'number_of_periods':56,
+        'grating_period': 0.269,
+        'corrugation_width': 0.0255,
+        'wg_width': 0.350,
+        'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
@@ -61,46 +61,14 @@ def design_99d2fae5efe0435da74352d9cf8c4a(cell, cell_y, inst_wg1, inst_wg2, inst
     inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
     
     # move the Bragg grating to the right, and up
-    inst_bragg2.transform(Trans(20000,180000))
- 
-    inst_bragg3 = connect_cell(inst_bragg2, 'opt1', cell_bragg, 'opt2')
-    
-    # move the Bragg grating to the right, and up
-    inst_bragg3.transform(Trans(20000,-20000))
-    connect_pins_with_waveguide(inst_bragg2, 'opt1', inst_bragg3, 'opt1', waveguide_type=waveguide_type)
-
-    inst_bragg4 = connect_cell(inst_bragg3, 'opt2', cell_bragg, 'opt2')
-    
-    # move the Bragg grating to the right, and up
-    inst_bragg4.transform(Trans(0,-20000))
-    connect_pins_with_waveguide(inst_bragg3, 'opt2', inst_bragg4, 'opt1', waveguide_type=waveguide_type)
-
-
-    inst_bragg5 = connect_cell(inst_bragg4, 'opt2', cell_bragg, 'opt2')
-    
-    # move the Bragg grating to the right, and up
-    inst_bragg5.transform(Trans(0,-20000))
-    connect_pins_with_waveguide(inst_bragg4, 'opt2', inst_bragg5, 'opt1', waveguide_type=waveguide_type)
-   
-   
-    inst_bragg6 = connect_cell(inst_bragg5, 'opt2', cell_bragg, 'opt2')
-    
-    # move the Bragg grating to the right, and up
-    inst_bragg6.transform(Trans(0,-20000))
-    connect_pins_with_waveguide(inst_bragg5, 'opt2', inst_bragg6, 'opt1', waveguide_type=waveguide_type)
-
-    inst_bragg7 = connect_cell(inst_bragg6, 'opt2', cell_bragg, 'opt2')
-    
-    # move the Bragg grating to the right, and up
-    inst_bragg7.transform(Trans(70000,80000))
-    connect_pins_with_waveguide(inst_bragg6, 'opt2', inst_bragg7, 'opt2', waveguide_type=waveguide_type)
+    inst_bragg2.transform(Trans(260000,100000))
 
     #####
     # Waveguides for the two outputs:
     connect_pins_with_waveguide(inst_y1, 'opt3', inst_wg3, 'opt1', waveguide_type=waveguide_type)
 
     # instantiate taper from 350 nm waveguide y-branch to 385 nm Bragg grating
-    inst_taper4 = connect_cell(inst_bragg7, 'opt1', cell_taper, 'pin2')
+    inst_taper4 = connect_cell(inst_bragg2, 'opt1', cell_taper, 'pin2')
 
     connect_pins_with_waveguide(inst_taper4, 'pin1', inst_wg2, 'opt1', waveguide_type=waveguide_type)
     
@@ -116,11 +84,19 @@ def design_99d2fae5efe0435da74352d9cf8c4a(cell, cell_y, inst_wg1, inst_wg2, inst
     '''
     try:
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
-           waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
-          turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
+            waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
+
+            turtle_A = [30,90,170,-90,30,-90,170,90,30,90,150,-90,30,-90,150,90,30,90,170,-90,30,-90,170,90,30,90,60,-90] )
+
+            
     except:    
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
-            turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
 
+            turtle_A = [30,90,170,-90,30,-90,170,90,30,90,150,-90,30,-90,150,90,30,90,170,-90,30,-90,170,90,30,90,60,-90] )
+            
+
+   
+
+    
     return inst_wg1, inst_wg2, inst_wg3
