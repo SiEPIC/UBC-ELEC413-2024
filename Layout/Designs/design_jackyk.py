@@ -40,7 +40,7 @@ def design_jackyk(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         'grating_period': 0.284,
         'corrugation_width': 0.030,
         'wg_width': 0.386,
-        'sinusoidal': True})
+        'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
