@@ -1,4 +1,4 @@
-# UBC-ELEC413-2022 Reports
+# UBC-ELEC413 Reports
 
 * Folder where all the uploaded reports should be found: https://qdot-nexus.phas.ubc.ca:25683/index.php/s/pBkiqx6neJMdKG5
 * Keep the same filename each time you update it
