@@ -22,9 +22,9 @@ def design_aychen00(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     # load the cells from the PDK
     # choose appropriate parameters
     cell_bragg = ly.create_cell('ebeam_pcell_bragg_grating', library, {
-        'number_of_periods':60,
+        'number_of_periods':14,
         'grating_period': 0.270,
-        'corrugation_width': 0.08,
+        'corrugation_width': 0.0581,
         'wg_width': 0.350,
         'sinusoidal': True})
     if not cell_bragg:
@@ -51,7 +51,7 @@ def design_aychen00(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     inst_bragg2 = connect_cell(inst_bragg1, 'opt2', cell_bragg, 'opt2')
     
     # move the Bragg grating to the right, and up
-    inst_bragg2.transform(Trans(250000,80000))
+    inst_bragg2.transform(Trans(260000,140000))
 
     #####
     # Waveguides for the two outputs:
@@ -72,8 +72,16 @@ def design_aychen00(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     using "turtle" routing
     https://github.com/SiEPIC/SiEPIC-Tools/wiki/Scripted-Layout#adding-a-waveguide-between-components
     '''
+    
+    # around 2000um
     connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
         waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
-        turtle_A = [250,90,20,90,250,-90,20,-90,250,90,20,90,250,-90,20,-90] )
+        turtle_A = [300,90,20,90,
+                    300,-90,20,-90,
+                    300,90,20,90,
+                    300,-90,20,-90,
+                    300,90,20,90,
+                    200,-90,20,-90,
+                    ] )
 
     return inst_wg1, inst_wg2, inst_wg3
