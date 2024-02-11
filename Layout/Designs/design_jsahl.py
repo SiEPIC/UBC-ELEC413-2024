@@ -38,14 +38,14 @@ def design_jsahl(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         'number_of_periods':20,
         'grating_period': 0.278,
         'corrugation_width': 0.03,
-        'wg_width': 0.35,
+        'wg_width': 0.365,
         'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
     cell_taper = ly.create_cell('ebeam_pcell_taper', library, {
         'wg_width1': 0.350,
-        'wg_width2': 0.385,
+        'wg_width2': 0.365,
             })
     if not cell_taper:
         raise Exception ('Cannot load taper cell; please check the script carefully.')
