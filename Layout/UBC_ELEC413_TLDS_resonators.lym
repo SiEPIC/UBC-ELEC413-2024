@@ -611,7 +611,7 @@ lv.zoom_fit()
 lv.max_hier()
 
 
-if 1:
+if 0:
     # Save the layout and a screenshot:
     import os
     filename = os.path.splitext(os.path.basename(__file__))[0]
@@ -637,7 +637,7 @@ if 1:
     except:
         raise Exception("Problem creating screenshot.")
 
-if 1:
+if 0:
     from SiEPICfab_ZEP_export import export_for_fabrication
     export_for_fabrication(flatten=True)
 </text>
