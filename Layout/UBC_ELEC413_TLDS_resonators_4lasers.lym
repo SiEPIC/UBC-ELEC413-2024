@@ -51,21 +51,26 @@ metal_width_laser = 50000
 metal_width_laser_heater = 20000
 
 # SiEPIC-Tools initialization
-if SiEPIC.__version__ &lt; '0.3.94':
-    raise Exception("This design requires SiEPIC-Tools version 0.3.94 or greater.")
+import pya
+import SiEPIC
+if SiEPIC.__version__ &lt; '0.5.4':
+    raise Exception("Errors", "This example requires SiEPIC-Tools version 0.5.4 or greater.")
 from SiEPIC import scripts  
 from SiEPIC.utils import get_layout_variables
-from SiEPIC.scripts import connect_pins_with_waveguide, connect_cell
-from SiEPIC.extend import to_itype
+from SiEPIC.scripts import connect_pins_with_waveguide, connect_cell, zoom_out, export_layout
+from SiEPIC.utils.layout import new_layout, floorplan
+from SiEPIC.utils import get_technology_by_name
 from SiEPIC.extend import to_itype
 
-mw = pya.Application().instance().main_window()
-ly = mw.create_layout(tech, 1).layout()
-cell = ly.create_cell('UBC_ELEC413_TLDS_resonators')
-lv = mw.current_view()
-lv.select_cell(cell.cell_index(), 0)
+'''
+Create a new layout
+with a top cell
+and Draw the floor plan
+'''    
+top_cell_name = 'UBC_ELEC413_TLDS_resonators'
+cell, ly = new_layout(tech, top_cell_name, GUI=True, overwrite = True)
 dbu = ly.dbu
-TECHNOLOGY, lv, ly, cell = get_layout_variables()
+TECHNOLOGY = get_technology_by_name(tech)
 
 if TECHNOLOGY['technology_name'] not in tech or not tech in pya.Technology.technology_names():
     raise Exception ('This example needs to be executed in a layout with Technology = %s' % tech)
@@ -73,7 +78,9 @@ else:
     waveguide_type = waveguide_type[tech]
 
 # Floorplan
+die_edge = int(7800000/2)
 die_edge = 2500000
+
 box = Box( Point(-die_edge, -die_edge), Point(die_edge, die_edge) )
 cell.shapes(ly.layer(TECHNOLOGY['FloorPlan'])).insert(box)
 
@@ -157,10 +164,12 @@ laser_y = -2200000
 laser_dy = 1.4e6
 for i in range(0,n_lasers):
     t = pya.Trans.from_s('r0 %s,%s' % (laser_x, laser_y) )
-    inst_laser = cell.insert(pya.CellInstArray(cell_laser.cell_index(), t))
-    exec('inst_laser'+str(i)+' = inst_laser')
+    inst_laserx = cell.insert(pya.CellInstArray(cell_laser.cell_index(), t))
+    exec('inst_laser'+str(i)+' = inst_laserx')
     laser_y += laser_dy
-    
+    if i==0:
+        inst_laser = inst_laserx
+
 
 
 '''
@@ -609,36 +618,15 @@ elif tree_depth==4:
       
 
 # Zoom out
-#lv.clearobject_selection()
-lv.zoom_fit()
-lv.max_hier()
+from SiEPIC.scripts import zoom_out
+zoom_out(cell)
 
-
-if 0:
-    # Save the layout and a screenshot:
-    import os
-    filename = os.path.splitext(os.path.basename(__file__))[0]
-    dir_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), 
-        filename+'.png')
-    file_out = os.path.join(os.path.dirname(os.path.realpath(__file__)), 
-        filename+'.gds')
-    # Save the layout, without PCell info, for fabrication
-    save_options = pya.SaveLayoutOptions()
-    # remove $$$CONTEXT_INFO$$$ PCells
-    save_options.write_context_info=False  
-    save_options.format='OASIS' # smaller file size
-    save_options.format='GDS2' 
-    # Save the layout
-    mw = pya.Application.instance().main_window()
-    cv = mw.current_view().active_cellview().index()
-    try:
-        lv.save_as(cv, file_out, save_options)
-    except:
-        raise Exception("Problem exporting your layout.")
-    try:
-        lv.save_screenshot(dir_path)
-    except:
-        raise Exception("Problem creating screenshot.")
+# Export for fabrication, removing PCells
+import os 
+path = os.path.dirname(os.path.realpath(__file__))
+filename = os.path.splitext(os.path.basename(__file__))[0]
+export_type = 'PCell'
+file_out = export_layout(cell, path, filename, relative_path = '.', format='oas', screenshot=True)
 
 if 0:
     from SiEPICfab_ZEP_export import export_for_fabrication
