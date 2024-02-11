@@ -1,7 +1,7 @@
 from pya import *
 
 
-def design_HangZou_w_340_dW_80_period_310_overetch_100_NG_11_rec(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
+def design_HangZou(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     
     # load functions
     from SiEPIC.scripts import connect_pins_with_waveguide, connect_cell
