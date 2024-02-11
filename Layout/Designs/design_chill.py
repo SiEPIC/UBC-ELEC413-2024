@@ -85,7 +85,7 @@ def design_chill(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     try:
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
-            turtle_A = [325,90,20,90,350,-90,20,-90,300,90,20,90,300,-90,20,-90,300,90,20,90,300,-90,20,-90,300,90,20,90,300,-90,20,-90,325,-90,94,90,30] )
+            turtle_A = [325,90,20,90,350,-90,20,-90,300,90,20,90,300,-90,20,-90,225,90,20,90,225,-90,20,-90,225,90,20,90,225,-90,20,-90,350,-90,70,-90,20,-90,50,90,80,90,20,90,60,-90,20,-90,60,90,20,90] )
     except:    
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
