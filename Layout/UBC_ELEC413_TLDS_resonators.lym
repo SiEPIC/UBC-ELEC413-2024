@@ -174,7 +174,7 @@ files_all = [f for f in os.listdir(os.path.join(os.path.dirname(
     os.path.realpath(__file__)),'Designs')) if '.py' in pathlib.Path(f).suffixes  and '__init__' not in f]
 import Designs ### folder name ###
 importlib.invalidate_caches()
-n_designs = len(files)
+n_designs = len(files_all)
 
 # Select only a subset of the files to run
 files_all = files_all[0:run_number_designs]
@@ -389,5 +389,7 @@ file_out = export_layout(cell, path, filename, relative_path = '.', format='oas'
 if 0:
     from SiEPICfab_ZEP_export import export_for_fabrication
     export_for_fabrication(flatten=True)
+
+print('Completed %s designs' % n_designs)
 </text>
 </klayout-macro>
