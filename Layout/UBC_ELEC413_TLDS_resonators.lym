@@ -65,8 +65,8 @@ metal_width_laser_heater = 20000
 # SiEPIC-Tools initialization
 import pya
 import SiEPIC
-if SiEPIC.__version__ &lt; '0.5.4':
-    raise Exception("Errors", "This example requires SiEPIC-Tools version 0.5.4 or greater.")
+if SiEPIC.__version__ &lt; '0.5.5':
+    raise Exception("Errors", "This script requires SiEPIC-Tools version 0.5.5 or greater.")
 from SiEPIC import scripts  
 from SiEPIC.utils import get_layout_variables
 from SiEPIC.scripts import connect_pins_with_waveguide, connect_cell, zoom_out, export_layout
