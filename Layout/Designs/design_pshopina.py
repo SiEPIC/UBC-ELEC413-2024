@@ -33,9 +33,9 @@ def design_pshopina(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     # load the cells from the PDK
     # choose appropriate parameters
     cell_bragg = ly.create_cell('ebeam_pcell_bragg_grating', library, {
-        'number_of_periods':35,
+        'number_of_periods':25,
         'grating_period': 0.270,
-        'corrugation_width': 0.022,
+        'corrugation_width': 0.050,
         'wg_width': 0.385,
         'sinusoidal': False})
     if not cell_bragg:
