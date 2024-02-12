@@ -39,14 +39,14 @@ def design_Alrayyes(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
         'number_of_periods':38,
         'grating_period': 0.2734,
         'corrugation_width': 0.06,
-        'wg_width': 0.386,
+        'wg_width': 0.365,
         'sinusoidal': False})
     if not cell_bragg:
         raise Exception ('Cannot load Bragg grating cell; please check the script carefully.')
 
     cell_taper = ly.create_cell('ebeam_pcell_taper', library, {
         'wg_width1': 0.350,
-        'wg_width2': 0.386,
+        'wg_width2': 0.365,
             })
     if not cell_taper:
         raise Exception ('Cannot load taper cell; please check the script carefully.')
