@@ -35,6 +35,11 @@ For more information on scripting:
   
 usage:
  - run this script
+ 
+to do:
+ - make this script run in external Python
+   - requires SiEPICfab_EBeam_ZEP to be a PyPI package 
+ 
 '''
 
 # Debugging run, or complete
