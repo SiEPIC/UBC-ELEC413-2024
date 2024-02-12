@@ -16,7 +16,7 @@ clear;
 #############################
 
 wl_min = 1.0e-6; # simulation wavelength start
-wl_max = 1.6e-6; # simulation wavelength stop
+wl_max = 1.9e-6; # simulation wavelength stop
 
 pol = 'TE'; # simulation polarization 
 
@@ -24,7 +24,7 @@ mesh_y = 5e-9;
 mesh_x = 5e-9;
 mesh_z = 20e-9;
 
-sim_time = 1000e-15; #E-15 is femto...
+sim_time = 200e-15; #E-15 is femto...
 mesh = 4;
 
 #############################
@@ -35,7 +35,7 @@ bias = -15e-9;
 ng = 4.53;  # group index of the waveguide (average width)
 W = 350e-9 + bias; # uncorrugated waveguide width
 dW = 70e-9; # waveguide corrugation
-period = 326e-9; # corrugations period
+period = 450e-9; # corrugations period
 dX = period/2;
 rib = false; # enable or disable rib layered waveguide type (do not enable with TM mode)
 sidewall_angle = 90;
