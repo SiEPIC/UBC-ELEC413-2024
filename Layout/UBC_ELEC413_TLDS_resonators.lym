@@ -56,7 +56,7 @@ waveguide_type={'SiEPICfab_Shuksan_PDK':'Strip TE 1310 nm, w=350 nm',
 blank_design = "design_ZZZ"  # Python design file, otherwise None for terminator.
 
 waveguide_pitch = 8
-
+dy_gcs = 127e3 # pitch of the fiber array
 pad_pitch = 250000
 metal_width = 20000
 metal_width_laser = 50000
@@ -161,6 +161,8 @@ else:
 radius_um = float(waveguide['radius'])
 radius = to_itype(waveguide['radius'],ly.dbu)
 
+
+
 # laser_height = cell_laser.bbox().height()
 laser_dy = die_size / (n_lasers+1) # spread out evenly
 laser_y = -die_size/2 #  
@@ -225,7 +227,6 @@ for row in range(0, n_lasers):
     n_gcs_eacharray = 8
     dx_gc_arrays = 495e3
     dy_gc_arrays = 950e3+60e3
-    dy_gcs = 127e3
     dx_gcA_B = 0e3
     dy_gcA_B = 0e3
     
@@ -331,7 +332,7 @@ for row in range(0, n_lasers):
         if not cell_wg3:
             raise Exception ('Cannot load Waveguide cell; please check the script carefully.')
         inst_wg3 = cell_design.insert(CellInstArray(cell_wg3.cell_index(), 
-            Trans(Trans.R0, fp_x-wg_l/2, inst_wg2.pinPoint('opt1').y+127000 )))
+            Trans(Trans.R0, fp_x-wg_l/2, inst_wg2.pinPoint('opt1').y+dy_gcs )))
     
         # run the design
         mm2 = m.__name__+'.'+design_name+'(cell_design, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type)'
@@ -371,7 +372,28 @@ for row in range(0, n_lasers):
                 turtle_A=[(16-ii)*waveguide_pitch,90,1,-90]; 
                 turtle_B = [waveguide_pitch*((2-ii)%3+1), -90, (n_gcs_eacharray-1.4-(ii)%3*2)*dy_gcs*dbu + (ii) *waveguide_pitch, 90] 
                 connect_pins_with_waveguide(inst_tree_out[floor((ii)/2)], 'opt%s'%(2+(ii-1)%2), inst_designs[j], 'opt_input', waveguide_type=waveguide_type, turtle_A=turtle_A, turtle_B=turtle_B, error_min_bend_radius=False, parent_cell=cell_routing)
-    
+
+# Grating couplers for alignment between fiber 1 and 8 
+loopback_locations = [
+    [die_size/2-200e3,-die_size/2+200e3],
+    [die_size/2-200e3,die_size/2-200e3-7*dy_gcs],
+    [inst_laser.bbox().right,-die_size/2+200e3],
+    [inst_laser.bbox().right,die_size/2-200e3-7*dy_gcs]]
+for i in range(0,len(loopback_locations)):
+    # Grating couplers:
+    t = Trans(Trans.R180, loopback_locations[i][0], loopback_locations[i][1])
+    inst_gc1 = cell.insert(CellInstArray(cell_gcA.cell_index(), t))
+    t = Trans(Trans.R180, loopback_locations[i][0], loopback_locations[i][1]+7*dy_gcs)
+    inst_gc2 = cell.insert(CellInstArray(cell_gcA.cell_index(), t))
+    # Waveguides for loopback:
+    inst_wg_loopbackA = connect_pins_with_waveguide(inst_gc1, 'opt1', inst_gc2, 'opt1', waveguide_type=waveguide_type)
+    # Automated test labels:
+    text = Text ('opt_in_TE_1310_loopback', Trans(Trans.R0, loopback_locations[i][0], loopback_locations[i][1]+7*dy_gcs))
+    shape = cell.shapes(ly.layer(TECHNOLOGY['Text'])).insert(text)
+    shape.text_size = 10/ly.dbu
+    shape.text_halign = 2
+
+   
 
 # Zoom out
 from SiEPIC.scripts import zoom_out
