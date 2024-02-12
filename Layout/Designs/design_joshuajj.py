@@ -85,11 +85,11 @@ def design_joshuajj(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_type):
     try:
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=385 nm (core-clad)', 
-            turtle_A = [30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,90,-90] )
+            turtle_A = [30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,90] )
 
     except:   
         connect_pins_with_waveguide(inst_bragg1, 'opt2', inst_bragg2, 'opt2', 
             waveguide_type='Strip TE 1310 nm, w=350 nm (core-clad)', 
-            turtle_A = [30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,90,-90] )
+            turtle_A = [30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,180,-90,30,-90,180,90,30,90,90] )
             
     return inst_wg1, inst_wg2, inst_wg3
