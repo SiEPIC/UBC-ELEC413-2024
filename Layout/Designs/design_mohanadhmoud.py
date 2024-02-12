@@ -54,7 +54,7 @@ def design_mohanadhmoud(cell, cell_y, inst_wg1, inst_wg2, inst_wg3, waveguide_ty
     # instantiate taper from 350 nm waveguide y-branch to 385 nm Bragg grating
     inst_taper1 = connect_cell(inst_y1, 'opt1', cell_taper, 'pin1')
     
-    # instantiate Bragg grating (attached to y branch)
+    # instantiate Bragg grating (attached to y branch).
     inst_bragg1 = connect_cell(inst_taper1, 'pin2', cell_bragg, 'opt1')
 
     # instantiate Bragg grating (attached to the first Bragg grating)
