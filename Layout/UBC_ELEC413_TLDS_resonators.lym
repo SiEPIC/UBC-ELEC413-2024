@@ -190,9 +190,9 @@ print(files_all)
 for row in range(0, n_lasers):
     
     # laser, place at absolute position
-    laser_x = -die_edge + cell_laser.bbox().top+150000
+    laser_x = -die_edge + cell_laser.bbox().top + 150000 + 300e3
     laser_y += laser_dy
-    t = pya.Trans.from_s('r0 %s,%s' % (laser_x, laser_y) )
+    t = pya.Trans.from_s('r0 %s,%s' % (int(laser_x), int(laser_y)) )
     inst_laser = cell.insert(pya.CellInstArray(cell_laser.cell_index(), t))
     
     # splitter tree

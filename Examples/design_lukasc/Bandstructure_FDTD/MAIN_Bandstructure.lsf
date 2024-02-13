@@ -24,7 +24,7 @@ mesh_y = 5e-9;
 mesh_x = 5e-9;
 mesh_z = 20e-9;
 
-sim_time = 1000e-15; #E-15 is femto...
+sim_time = 200e-15; #E-15 is femto...
 mesh = 4;
 
 #############################
